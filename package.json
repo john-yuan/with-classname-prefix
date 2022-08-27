@@ -1,0 +1,34 @@
+{
+  "name": "with-classname-prefix",
+  "version": "0.0.1-alpha",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "es/index.js",
+  "files": ["es", "lib"],
+  "scripts": {
+    "build": "tsc && tsc --outDir es --module es2020",
+    "lint": "eslint --ext .js,.ts ./src",
+    "lint:fix": "npm run lint -- --fix",
+    "test": "jest",
+    "test:cover": "jest --collect-coverage",
+    "prepublishOnly": "npm run test:cover && npm run build"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.8",
+    "@typescript-eslint/eslint-plugin": "^4.22.0",
+    "@typescript-eslint/parser": "^4.22.0",
+    "eslint": "^7.24.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "jest": "^28.0.0",
+    "ts-jest": "^28.0.8",
+    "typescript": "4.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/john-yuan/with-classname-prefix"
+  },
+  "license": "MIT"
+}
