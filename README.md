@@ -49,3 +49,7 @@ cls1('btn') // ui__btn
 const cls2 = withClassNamePrefix('ui', '')
 cls2('--btn') // ui--btn
 ```
+
+## License
+
+[MIT](https://github.com/john-yuan/with-classname-prefix/blob/main/LICENSE)
