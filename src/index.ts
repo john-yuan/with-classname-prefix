@@ -55,5 +55,3 @@ export const withClassNamePrefix = (prefix: string, separator?: string) => {
 
   return fn
 }
-
-export default withClassNamePrefix
