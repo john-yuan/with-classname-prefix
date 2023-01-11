@@ -1,18 +1,15 @@
-# README
+# with-classname-prefix
+
+[![npm version](https://img.shields.io/npm/v/with-classname-prefix)](https://www.npmjs.com/package/with-classname-prefix)
+[![install size](https://packagephobia.now.sh/badge?p=with-classname-prefix)](https://packagephobia.now.sh/result?p=with-classname-prefix)
+[![npm downloads](https://img.shields.io/npm/dm/with-classname-prefix.svg)](http://npm-stat.com/charts.html?package=with-classname-prefix)
 
 A simple function to add prefix to classnames.
 
 ## Install
 
-```bash
-# via npm
+```sh
 npm i with-classname-prefix
-
-# via yarn
-yarn i with-classname-prefix
-
-# via pnpm
-pnpm i with-classname-prefix
 ```
 
 ## Usage
