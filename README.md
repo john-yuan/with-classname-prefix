@@ -1,8 +1,8 @@
 # README
 
-A helper function to create a function that add prefix to its arguments.
+A simple function to add prefix to classnames.
 
-Install:
+## Install
 
 ```bash
 # via npm
@@ -18,38 +18,37 @@ pnpm i with-classname-prefix
 ## Usage
 
 ```ts
-import withClassNamePrefix from 'with-classname-prefix'
+import { withClassNamePrefix } from 'with-classname-prefix'
 
-const ns = withClassNamePrefix('ui')
+const cls = withClassNamePrefix('ui')
 
-ns('btn') // ui-btn
-ns('btn btn-primary') // ui-btn ui-btn-primary
-ns('btn', 'btn-primary') // ui-btn ui-btn-primary
-ns(['btn', 'btn-primary']) // ui-btn ui-btn-primary
-ns('btn', '', 0, false, null, undefined) // ui-btn ui-btn-primary
-ns({
-  'btn': true,
-  'btn-primary': true,
-  'btn-danger': false
-}) // ui-btn ui-btn-primary
-ns([
-  { btn: true },
-  {
-    'btn-primary': true,
-    'btn-danger': false
-  }
-]) // ui-btn ui-btn-primary
+cls('btn') // "ui-btn"
+cls('btn btn-default') // "ui-btn ui-btn-default"
+cls('btn', 'btn-default') // "ui-btn ui-btn-default"
+cls('btn', false, null, undefined) // "ui-btn"
+cls('btn', {
+  'btn-default': true,
+  'btn-primary': false
+}) // "ui-btn ui-btn-default"
+
+cls.raw('custom-btn').toString() // "custom-btn"
+cls.raw('custom-btn').addPrefixed('btn') // "custom-btn ui-btn"
+cls.raw({
+  'custom-btn': true,
+  'custom-btn-default': 1,
+  'custom-btn-primary': 0
+}).addPrefixed('btn') // "custom-btn custom-btn-default ui-btn"
 ```
 
-You can set the separator (default to `-`) by passing the second parameter:
+You can set the separator (the default separator is `-`) by passing the second parameter:
 
 ```ts
-import withClassNamePrefix from 'with-classname-prefix'
+import { withClassNamePrefix } from 'with-classname-prefix'
 
-const ns1 = withClassNamePrefix('ui', '__')
-const ns2 = withClassNamePrefix('ui', '') // unset the default separator (-)
+const cls1 = withClassNamePrefix('ui', '__')
+cls1('btn') // ui__btn
 
-ns1('btn') // ui__btn
-ns2('--btn') // ui--btn
-
+// unset the default separator (-)
+const cls2 = withClassNamePrefix('ui', '')
+cls2('--btn') // ui--btn
 ```

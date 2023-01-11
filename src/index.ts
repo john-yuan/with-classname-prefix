@@ -1,43 +1,57 @@
-type Arg = string | number | boolean | undefined | null | Record<string, any>;
-type Args = Arg | Arg[];
+export type ClassNameArg = Record<string, any> | string | false | null | undefined
 
-const toString = Object.prototype.toString
-const hasOwn = Object.prototype.hasOwnProperty
-const isObject = (v: any) => toString.call(v) === '[object Object]'
-
-const withClassNamePrefix = (prefix: string, separator = '-') => {
-  return (...args: Args[]) => {
-    let className = ''
-
-    const addNext = (arg: Args) => {
-      if (arg) {
-        if (typeof arg === 'string') {
-          arg.split(/\s+/).forEach((name) => {
-            if (name) {
-              className = className
-                ? className + ' ' + prefix + separator + name
-                : prefix + separator + name
-            }
-          })
-        } else if (typeof arg === 'number') {
-          addNext('' + arg)
-        } else if (Array.isArray(arg)) {
-          arg.forEach(addNext)
-        } else if (isObject(arg)) {
-          const object = arg as any
-          for (const prop in object) {
-            if (object[prop] && hasOwn.call(object, prop)) {
-              addNext(prop)
-            }
-          }
-        }
-      }
-    }
-
-    addNext(args)
-
-    return className
+export interface ClassNamePrefixFunction {
+  (...args: ClassNameArg[]): string
+  raw: (...rawArgs: ClassNameArg[]) => {
+    toString: () => string
+    addPrefixed: (...args: ClassNameArg[]) => string
   }
 }
 
-export default withClassNamePrefix
+const resolveClassNames = (args: ClassNameArg[]) => {
+  const classNames: string[] = []
+
+  const putString = (str: string) => {
+    str.split(/\s+/).forEach((name) => {
+      if (name && classNames.indexOf(name) === -1) {
+        classNames.push(name)
+      }
+    })
+  }
+
+  args.forEach((arg) => {
+    if (typeof arg === 'string') {
+      putString(arg)
+    } else if (arg) {
+      Object.keys(arg).forEach((key) => {
+        if (arg[key]) {
+          putString(key)
+        }
+      })
+    }
+  })
+
+  return classNames
+}
+
+export const withClassNamePrefix = (prefix: string, separator?: string) => {
+  const sep = typeof separator === 'string' ? separator : '-'
+  const fn: ClassNamePrefixFunction = (...args: ClassNameArg[]) => {
+    return resolveClassNames(args)
+      .map((name) => `${prefix}${sep}${name}`)
+      .join(' ')
+  }
+
+  fn.raw = (...rawArgs: ClassNameArg[]) => {
+    const classNames = resolveClassNames(rawArgs)
+    return {
+      addPrefixed: (...args: ClassNameArg[]) => {
+        classNames.push(fn(...args))
+        return classNames.join(' ')
+      },
+      toString: () => classNames.join(' ')
+    }
+  }
+
+  return fn
+}

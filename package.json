@@ -1,10 +1,12 @@
 {
   "name": "with-classname-prefix",
-  "version": "0.0.1-alpha",
+  "description": "A simple function to add prefix to classnames.",
+  "version": "1.0.0-alpha.2",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "module": "es/index.js",
   "files": ["es", "lib"],
+  "keywords": ["classname", "prefix"],
   "scripts": {
     "build": "tsc && tsc --outDir es --module es2020",
     "lint": "eslint --ext .js,.ts ./src",
@@ -30,5 +32,6 @@
     "type": "git",
     "url": "https://github.com/john-yuan/with-classname-prefix"
   },
+  "author": "JOHN YUAN",
   "license": "MIT"
 }
