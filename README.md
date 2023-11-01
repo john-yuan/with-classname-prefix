@@ -35,6 +35,10 @@ cls.raw({
   'custom-btn-default': 1,
   'custom-btn-primary': 0
 }).addPrefixed('btn') // "custom-btn custom-btn-default ui-btn"
+
+cls
+  .raw(cls.getPrefix())
+  .addPrefix('theme-dark') // "ui ui-theme-dark"
 ```
 
 You can set the separator (the default separator is `-`) by passing the second parameter:

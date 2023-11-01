@@ -2,13 +2,14 @@ export type ClassNameArg = Record<string, any> | string | false | null | undefin
 
 export interface ClassNamePrefixFunction {
   (...args: ClassNameArg[]): string
+  getPrefix: () => string
   raw: (...rawArgs: ClassNameArg[]) => {
     toString: () => string
     addPrefixed: (...args: ClassNameArg[]) => string
   }
 }
 
-const resolveClassNames = (args: ClassNameArg[]) => {
+function resolveClassNames (args: ClassNameArg[]) {
   const classNames: string[] = []
 
   const putString = (str: string) => {
@@ -34,13 +35,15 @@ const resolveClassNames = (args: ClassNameArg[]) => {
   return classNames
 }
 
-export const withClassNamePrefix = (prefix: string, separator?: string) => {
+export function withClassNamePrefix (prefix: string, separator?: string) {
   const sep = typeof separator === 'string' ? separator : '-'
   const fn: ClassNamePrefixFunction = (...args: ClassNameArg[]) => {
     return resolveClassNames(args)
       .map((name) => `${prefix}${sep}${name}`)
       .join(' ')
   }
+
+  fn.getPrefix = () => prefix
 
   fn.raw = (...rawArgs: ClassNameArg[]) => {
     const classNames = resolveClassNames(rawArgs)

@@ -64,3 +64,11 @@ it('should combine prefixed classnames with raw classnames', () => {
   const cls = withClassNamePrefix('ui')
   expect(cls.raw('custom-btn').addPrefixed('btn')).toBe('custom-btn ui-btn')
 })
+
+it('should return the correct prefix', () => {
+  const cls = withClassNamePrefix('ui-Button')
+  expect(cls.raw(cls.getPrefix()).addPrefixed('primary')).toBe('ui-Button ui-Button-primary')
+
+  expect(withClassNamePrefix('ui').getPrefix()).toBe('ui')
+  expect(withClassNamePrefix('ui', '__').getPrefix()).toBe('ui')
+})
