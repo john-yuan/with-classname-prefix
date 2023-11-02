@@ -15,33 +15,51 @@ npm i with-classname-prefix
 ## Usage
 
 ```ts
-import { withClassNamePrefix } from 'with-classname-prefix'
+import { classNames, withClassNamePrefix } from 'with-classname-prefix'
 
 const cls = withClassNamePrefix('ui')
 
-cls('btn') // "ui-btn"
-cls('btn btn-default') // "ui-btn ui-btn-default"
-cls('btn', 'btn-default') // "ui-btn ui-btn-default"
-cls('btn', false, null, undefined) // "ui-btn"
+// ui-btn
+cls('btn')
+cls('btn', false, null, undefined, 0, NaN, '')
+cls(['btn', 0, false], null, undefined, [NaN, [''], []])
+
+// ui-btn ui-btn-default
+cls('btn btn-default')
+cls('btn', 'btn-default')
 cls('btn', {
   'btn-default': true,
-  'btn-primary': false
-}) // "ui-btn ui-btn-default"
+  'btn-primary': false,
+  'btn-secondary': 0
+})
 
-cls.raw('custom-btn').toString() // "custom-btn"
-cls.raw('custom-btn').addPrefixed('btn') // "custom-btn ui-btn"
+// custom-btn
+cls.raw('custom-btn').toString()
+
+// custom-btn ui-btn
+cls.raw('custom-btn').prefixed('btn')
+
+// custom-btn custom-btn-default ui-btn
 cls.raw({
   'custom-btn': true,
   'custom-btn-default': 1,
   'custom-btn-primary': 0
-}).addPrefixed('btn') // "custom-btn custom-btn-default ui-btn"
+}).prefixed('btn')
 
-cls
-  .raw(cls.getPrefix())
-  .addPrefixed('theme-dark') // "ui ui-theme-dark"
+// ui ui-theme-dark
+cls.root().prefixed('theme-dark')
+
+// foo bar
+classNames('foo', { 'bar': true })
+
+// foo bar
+classNames('foo', '', true, false, 0, NaN, null, undefined, 'bar')
+
+// foo bar baz
+classNames(null, ['foo', 0, ['bar', [{ 'baz': 1 }], false], ''])
 ```
 
-You can set the separator (the default separator is `-`) by passing the second parameter:
+You can set the separator (the default separator is `-`) by passing the second parameter of `withClassNamePrefix`:
 
 ```ts
 import { withClassNamePrefix } from 'with-classname-prefix'
@@ -56,4 +74,4 @@ cls2('--btn') // ui--btn
 
 ## License
 
-[MIT](https://github.com/john-yuan/with-classname-prefix/blob/main/LICENSE)
+[MIT](./LICENSE)
