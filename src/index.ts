@@ -53,7 +53,7 @@ export function classNames (...args: ClassNameArg[]) {
 export class ClassNameBuilder {
   private _p: string // prefix
   private _s: string // separator
-  private _c: string[] // resolveClassName array
+  private _c: string[] // classname array
 
   constructor (prefix: string, separator: string) {
     this._p = prefix
