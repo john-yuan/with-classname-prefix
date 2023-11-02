@@ -105,8 +105,20 @@ export class ClassNameBuilder {
 }
 
 export interface ClassNamePrefixFunction {
+  /**
+   * Add classnames. These classnames will be prefixed.
+   * This function will return the final classname.
+   */
   (...args: ClassNameArg[]): string
+
+  /**
+   * Add raw classnames. These classnames will not be prefixed.
+   */
   raw: (...args: ClassNameArg[]) => ClassNameBuilder
+
+  /**
+   * Add the prefix as a raw classname.
+   */
   root: () => ClassNameBuilder
 }
 
