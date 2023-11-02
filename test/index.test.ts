@@ -129,6 +129,10 @@ describe('README.md', () => {
     ).toBe('ui ui-theme-dark')
 
     expect(
+      cls.raw('custom-theme').root().prefixed('theme-dark')
+    ).toBe('custom-theme ui ui-theme-dark')
+
+    expect(
       classNames('foo', { bar: true })
     ).toBe('foo bar')
 

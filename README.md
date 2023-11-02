@@ -49,6 +49,9 @@ cls.raw({
 // ui ui-theme-dark
 cls.root().prefixed('theme-dark')
 
+// custom-theme ui ui-theme-dark
+cls.raw('custom-theme').root().prefixed('theme-dark')
+
 // foo bar
 classNames('foo', { 'bar': true })
 
